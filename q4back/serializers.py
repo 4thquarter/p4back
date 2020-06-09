@@ -26,7 +26,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 
 class ArtworkSerializer(serializers.ModelSerializer):
-    artist = PreArtistSerializer()
+    artist = PreArtistSerializer(read_only=True)
     artist_id = serializers.PrimaryKeyRelatedField(
         queryset=Artist.objects.all(),
         source='artist'
