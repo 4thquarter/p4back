@@ -4,27 +4,25 @@ from .models import Artist, Artwork, ArtistImage, ArtworkImage
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
     artwork = serializers.HyperlinkedRelatedField(
-        view_name='',
-        #not using templates?
+        view_name='artwork_detail',
         many=True,
         read_only=True
     )
     artist_url = serializers.ModelSerializer.serializer_url_field(
-        view_name=''
-        #same issue
+        view_name='artist_detail'
+        
     )
 
     class Meta:
-    model = Artist
-    fields = (
-        'id', 'email', 'information',
+        model = Artist
+        fields = (
+            'id', 'email', 'information', 'artist_url', 'artwork',
     )
 
 
-class ArtistworkSerializer(serializers.HyperlinkedModelSerializer):
+class ArtworkSerializer(serializers.HyperlinkedModelSerializer):
     artist = serializers.HyperlinkedRelatedField(
-        view_name='',
-        #template issue
+        view_name='artist_detail',
         read_only=True
     )
     artist_id = serializers.PrimaryKeyRelatedField(
@@ -35,7 +33,3 @@ class ArtistworkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Artwork
         fields = ('id', 'artist', 'artist_id', 'title', 'description',)
-
-
-# Not sure if I need to add ArtistImage and ArtistWork.
-# If so then it would just reflect what model its connected to and just use a url for the fields, since its just images.
