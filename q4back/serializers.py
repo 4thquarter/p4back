@@ -35,3 +35,13 @@ class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artwork
         fields = '__all__'
+
+
+
+
+class ArtworkImageSerializer(serializers.ModelSerializer):
+    artist = ArtistSerializer(read_only=True)
+
+    class Meta:
+        model = ArtworkImage
+        fields = '__all__' 

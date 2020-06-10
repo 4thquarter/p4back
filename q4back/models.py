@@ -1,6 +1,13 @@
 from django.db import models
+from time import time
 
 # Create your models here.
+
+
+def upload_image(instance, filename):
+    ext = filename.split('.')[-1]
+    newfilename = f'{instance.name}{round(time())}.{ext}'
+    return f'artwork/{newfilename}'
 
 
 class Artist(models.Model):
@@ -28,4 +35,4 @@ class ArtistImage(models.Model):
 class ArtworkImage(models.Model):
     artwork_image = models.ForeignKey(
         Artwork, on_delete=models.CASCADE, related_name='artwork_image')
-    image_url = models.TextField()
+    image_url = models.ImageField(upload_to=upload_image, blank=True)

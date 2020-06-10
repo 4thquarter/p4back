@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import ArtistSerializer, ArtworkSerializer
+from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkImageSerializer
 from .models import Artist, Artwork, ArtistImage, ArtworkImage
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -72,3 +72,13 @@ class ArtworkDetail(generics.RetrieveAPIView):
 class ArtworkEdit(generics.RetrieveUpdateDestroyAPIView):
     queryset = Artwork.objects.all()
     serializer_class = ArtworkSerializer
+
+
+class ArtworkImageDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArtworkImage.objects.all()
+    serializer_class = ArtworkImageSerializer
+
+
+class ArtworkImageList(generics.ListCreateAPIView):
+    queryset = ArtworkImage.objects.all()
+    serializer_class = ArtworkImageSerializer
