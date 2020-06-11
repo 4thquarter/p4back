@@ -13,26 +13,27 @@ def upload_media(instance, filename):
 
 
 class ArtistMedia(models.Model):
-    media_url = models.ImageField(upload_to=upload_media, blank=True)
+    media_url = models.ImageField(
+        upload_to=upload_media)
     owner = models.ForeignKey(
         User, related_name='artistmedias', on_delete=models.CASCADE)
 
 
 class ArtworkMedia(models.Model):
-    media_url = models.ImageField(upload_to=upload_media, blank=True)
+    media_url = models.ImageField(
+        upload_to=upload_media)
     owner = models.ForeignKey(
         User, related_name='artworkmedias', on_delete=models.CASCADE)
-
 
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    information = models.TextField()
-    location = models.CharField(max_length=100)
-    artist_website = models.TextField()
+    information = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    artist_website = models.TextField(blank=True, null=True)
     artist_media = models.ForeignKey(
-        ArtistMedia, on_delete=models.CASCADE, related_name='artist_media')
+        ArtistMedia, on_delete=models.CASCADE, related_name='artist_media', blank=True, null=True)
     owner = models.ForeignKey(
         User, related_name='artists', on_delete=models.CASCADE)
 
@@ -46,16 +47,25 @@ class Artwork(models.Model):
         ('yellow', 'yellow'),
         ('red', 'red'),
     )
+    MEDIUM_CHOICES = (
+        ('none', 'none'),
+        ('sculpture', 'sculpture'),
+        ('flat art', 'flat art'),
+        ('audio', 'audio'),
+
+    )
+
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     primary_palette = models.CharField(
         max_length=6, choices=PALETTE_CHOICES, default='none',)
     secondary_palette = models.CharField(
         max_length=6, choices=PALETTE_CHOICES, default='none',)
-    medium = models.CharField(max_length=100)
+    medium = models.CharField(
+        max_length=9, choices=MEDIUM_CHOICES, default='none')
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
     artwork_media = models.ForeignKey(
-        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media')
+        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media', blank=True, null=True)
     owner = models.ForeignKey(
         User, related_name='artworks', on_delete=models.CASCADE)
