@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkMediaSerializer
-from .models import Artist, Artwork, ArtistMedia, ArtworkMedia, User
+from .models import Artist, Artwork, ArtistMedia, ArtworkMedia
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from q4back.permissions import IsOwnerOrReadOnly
@@ -13,6 +13,9 @@ class ArtistList(generics.ListCreateAPIView):
     filterset_fields = ['name', 'email']
     search_fields = ['name', 'email', 'information']
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -30,6 +33,9 @@ class ArtworkList(generics.ListCreateAPIView):
                         'primary_palette', 'secondary_palette', 'medium']
     search_fields = ['title', 'description']
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class ArtworkDetail(generics.RetrieveUpdateDestroyAPIView):

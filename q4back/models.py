@@ -1,6 +1,7 @@
 from django.db import models
 from time import time
-from django.contrib.auth.models import User
+from django.conf import settings
+from users.models import User
 
 # Create your models here.
 
@@ -14,13 +15,13 @@ def upload_media(instance, filename):
 class ArtistMedia(models.Model):
     media_url = models.ImageField(upload_to=upload_media, blank=True)
     owner = models.ForeignKey(
-        'auth.User', related_name='artistmedias', on_delete=models.CASCADE)
+        User, related_name='artistmedias', on_delete=models.CASCADE)
 
 
 class ArtworkMedia(models.Model):
     media_url = models.ImageField(upload_to=upload_media, blank=True)
     owner = models.ForeignKey(
-        'auth.User', related_name='artworkmedias', on_delete=models.CASCADE)
+        User, related_name='artworkmedias', on_delete=models.CASCADE)
 
 
 
@@ -33,7 +34,7 @@ class Artist(models.Model):
     artist_media = models.ForeignKey(
         ArtistMedia, on_delete=models.CASCADE, related_name='artist_media')
     owner = models.ForeignKey(
-        'auth.User', related_name='artists', on_delete=models.CASCADE)
+        User, related_name='artists', on_delete=models.CASCADE)
 
 
 class Artwork(models.Model):
@@ -57,4 +58,4 @@ class Artwork(models.Model):
     artwork_media = models.ForeignKey(
         ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media')
     owner = models.ForeignKey(
-        'auth.User', related_name='artworks', on_delete=models.CASCADE)
+        User, related_name='artworks', on_delete=models.CASCADE)
