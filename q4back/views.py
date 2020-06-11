@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkMediaSerializer, ArtworkMediaSerializer
+from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkMediaSerializer, ArtistMediaSerializer
 from .models import Artist, Artwork, ArtistMedia, ArtworkMedia
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -38,11 +38,22 @@ class ArtworkList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
+permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
 class ArtworkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Artwork.objects.all()
     serializer_class = ArtworkSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+class ArtworkMediaList(generics.ListCreateAPIView):
+    queryset = ArtworkMedia.objects.all()
+    serializer_class = ArtworkMediaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class ArtworkMediaDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -52,6 +63,17 @@ class ArtworkMediaDetail(generics.RetrieveUpdateDestroyAPIView):
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class ArtworkMediaList(generics.ListCreateAPIView):
-    queryset = ArtworkMedia.objects.all()
-    serializer_class = ArtworkMediaSerializer
+class ArtistMediaList(generics.ListCreateAPIView):
+    queryset = ArtistMedia.objects.all()
+    serializer_class = ArtistMediaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class ArtistMediaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArtistMedia.objects.all()
+    serializer_class = ArtistMediaSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
