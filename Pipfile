@@ -15,6 +15,7 @@ django-extensions = "*"
 boto3 = "*"
 django-filter = "*"
 pillow = "*"
+djangorestframework-simplejwt = "*"
 
 [requires]
 python_version = "3.6"

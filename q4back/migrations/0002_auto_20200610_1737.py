@@ -12,8 +12,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='artworkimage',
+            model_name='ArtworkMedia',
             name='image_url',
-            field=models.ImageField(blank=True, upload_to=q4back.models.upload_image),
+            field=models.ImageField(
+                blank=True, upload_to=q4back.models.upload_image),
         ),
     ]

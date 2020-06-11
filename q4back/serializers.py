@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Artist, Artwork, ArtistImage, ArtworkImage
+from .models import Artist, Artwork, ArtistMedia, ArtworkMedia
+from django.contrib.auth.models import User
 
 
 class PreArtworkSerializer(serializers.ModelSerializer):
@@ -11,8 +12,6 @@ class PreArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model=Artist
         fields='__all__'
-
-
 
 class ArtistSerializer(serializers.ModelSerializer):
     artwork = PreArtworkSerializer(many=True, read_only=True)
@@ -39,9 +38,9 @@ class ArtworkSerializer(serializers.ModelSerializer):
 
 
 
-class ArtworkImageSerializer(serializers.ModelSerializer):
+class ArtworkMediaSerializer(serializers.ModelSerializer):
     artist = ArtistSerializer(read_only=True)
 
     class Meta:
-        model = ArtworkImage
+        model = ArtworkMedia
         fields = '__all__' 
