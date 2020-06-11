@@ -52,6 +52,7 @@ class Artwork(models.Model):
         ('sculpture', 'sculpture'),
         ('flat art', 'flat art'),
         ('audio', 'audio'),
+        ('none', 'none'),
 
     )
 
@@ -66,6 +67,6 @@ class Artwork(models.Model):
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
     artwork_media = models.ForeignKey(
-        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media', blank=True, null=True)
+        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media')
     owner = models.ForeignKey(
         User, related_name='artworks', on_delete=models.CASCADE)
