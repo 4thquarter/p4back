@@ -45,6 +45,13 @@ class ArtworkDetail(generics.RetrieveUpdateDestroyAPIView):
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
+
+
+class ArtworkMediaList(generics.ListCreateAPIView):
+    queryset = ArtworkMedia.objects.all()
+    serializer_class = ArtworkMediaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
 class ArtworkMediaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ArtworkMedia.objects.all()
     serializer_class = ArtworkMediaSerializer
@@ -52,6 +59,14 @@ class ArtworkMediaDetail(generics.RetrieveUpdateDestroyAPIView):
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class ArtworkMediaList(generics.ListCreateAPIView):
-    queryset = ArtworkMedia.objects.all()
-    serializer_class = ArtworkMediaSerializer
+class ArtistMediaList(generics.ListCreateAPIView):
+    queryset = ArtistMedia.objects.all()
+    serializer_class = ArtistMediaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+
+
+class ArtistMediaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArtistMedia.objects.all()
+    serializer_class = ArtistMediaSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

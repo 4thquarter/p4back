@@ -11,4 +11,7 @@ urlpatterns = [
          name='ArtworkMedia_detail'),
     path('ArtworkMedia/', views.ArtworkMediaList.as_view(),
          name='ArtworkMedia_list'),
+    path('ArtistMedia/<int:pk>', views.ArtistMediaDetail.as_view(),
+         name='ArtistMedia_detail'),
+    path('ArtistMedia/', views.ArtistMediaList.as_view(), name='ArtistMedia_list'),
 ]
