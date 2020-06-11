@@ -1,38 +1,60 @@
 from django.db import models
 from time import time
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
-def upload_image(instance, filename):
+def upload_media(instance, filename):
     ext = filename.split('.')[-1]
     newfilename = f'{instance.name}{round(time())}.{ext}'
     return f'artwork/{newfilename}'
+
+
+class ArtistMedia(models.Model):
+    media_url = models.ImageField(upload_to=upload_media, blank=True)
+    owner = models.ForeignKey(
+        'auth.User', related_name='artistmedias', on_delete=models.CASCADE)
+
+
+class ArtworkMedia(models.Model):
+    media_url = models.ImageField(upload_to=upload_media, blank=True)
+    owner = models.ForeignKey(
+        'auth.User', related_name='artworkmedias', on_delete=models.CASCADE)
+
 
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     information = models.TextField()
+    location = models.CharField(max_length=100)
+    artist_website = models.TextField()
+    artist_media = models.ForeignKey(
+        ArtistMedia, on_delete=models.CASCADE, related_name='artist_media')
+    owner = models.ForeignKey(
+        'auth.User', related_name='artists', on_delete=models.CASCADE)
 
 
 class Artwork(models.Model):
+    PALETTE_CHOICES = (
+        ('none', 'none'),
+        ('light', 'light'),
+        ('dark', 'dark'),
+        ('blue', 'blue'),
+        ('yellow', 'yellow'),
+        ('red', 'red'),
+    )
     title = models.CharField(max_length=100)
     description = models.TextField()
+    primary_palette = models.CharField(
+        max_length=6, choices=PALETTE_CHOICES, default='none',)
+    secondary_palette = models.CharField(
+        max_length=6, choices=PALETTE_CHOICES, default='none',)
+    medium = models.CharField(max_length=100)
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
-    primary_pallet = models.CharField(max_length=100)
-    secondary_pallet = models.CharField(max_length=100)
-    medium = models.CharField(max_length=100)
-
-
-class ArtistImage(models.Model):
-    artist_image = models.ForeignKey(
-        Artist, on_delete=models.CASCADE, related_name='artist_image')
-    image_url = models.TextField()
-
-
-class ArtworkImage(models.Model):
-    artwork_image = models.ForeignKey(
-        Artwork, on_delete=models.CASCADE, related_name='artwork_image')
-    image_url = models.ImageField(upload_to=upload_image, blank=True)
+    artwork_media = models.ForeignKey(
+        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media')
+    owner = models.ForeignKey(
+        'auth.User', related_name='artworks', on_delete=models.CASCADE)
