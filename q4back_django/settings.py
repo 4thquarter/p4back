@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'django_extensions',
     'django_filters',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# AWS S3 file upload required settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'q4back/')
+# Get these from .env file or from .aws/credentials file
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = 'lastdance'
+AWS_DEFAULT_ACL = 'public-read'
+
+# Set the default storage to use s3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AUTH_USER_MODEL = 'users.User'
 

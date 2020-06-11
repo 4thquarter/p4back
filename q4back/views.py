@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkMediaSerializer
+from .serializers import ArtistSerializer, ArtworkSerializer, ArtworkMediaSerializer, ArtworkMediaSerializer
 from .models import Artist, Artwork, ArtistMedia, ArtworkMedia
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter

@@ -16,6 +16,7 @@ boto3 = "*"
 django-filter = "*"
 pillow = "*"
 djangorestframework-simplejwt = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.6"
