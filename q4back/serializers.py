@@ -41,7 +41,6 @@ class ArtworkSerializer(serializers.ModelSerializer):
 class ArtworkMediaSerializer(serializers.ModelSerializer):
     artwork_id = serializers.PrimaryKeyRelatedField(
         read_only=True,
-        # queryset=Artwork.objects.all(),
         source='artwork'
     )
 
@@ -52,10 +51,10 @@ class ArtworkMediaSerializer(serializers.ModelSerializer):
 
 class ArtistMediaSerializer(serializers.ModelSerializer):
     artist_id = serializers.PrimaryKeyRelatedField(
-        queryset=Artist.objects.all(),
+        read_only=True,
         source='artist'
     )
 
     class Meta:
-        model = ArtworkMedia
+        model = ArtistMedia
         fields = '__all__'

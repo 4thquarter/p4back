@@ -8,6 +8,7 @@ from users.permissions import IsOwner
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):

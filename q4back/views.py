@@ -66,7 +66,7 @@ class ArtworkMediaDetail(generics.RetrieveUpdateDestroyAPIView):
 class ArtistMediaList(generics.ListCreateAPIView):
     queryset = ArtistMedia.objects.all()
     serializer_class = ArtistMediaSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
