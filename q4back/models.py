@@ -31,6 +31,7 @@ class Artwork(models.Model):
         ('blue', 'blue'),
         ('yellow', 'yellow'),
         ('red', 'red'),
+        ('green', 'green'),
     )
     MEDIUM_CHOICES = (
         ('none', 'none'),
