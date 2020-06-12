@@ -20,6 +20,7 @@ class ArtistMedia(models.Model):
 
 
 class ArtworkMedia(models.Model):
+    name = models.CharField(max_length=100)
     media_url = models.ImageField(
         upload_to=upload_media)
     owner = models.ForeignKey(
@@ -64,6 +65,7 @@ class Artwork(models.Model):
         max_length=9, choices=MEDIUM_CHOICES, default='none')
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
-    artwork_media = models.ForeignKey(ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media', blank=True, null=True)
+    artwork_media = models.ForeignKey(
+        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media', blank=True, null=True)
     owner = models.ForeignKey(
         User, related_name='artworks', on_delete=models.CASCADE)
