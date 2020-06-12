@@ -25,28 +25,39 @@ class Artist(models.Model):
 
 class Artwork(models.Model):
     PALETTE_CHOICES = (
-        ('none', 'none'),
-        ('light', 'light'),
-        ('dark', 'dark'),
+        ('mixed', 'mixed'),
+        ('red', 'red'),
         ('blue', 'blue'),
         ('yellow', 'yellow'),
-        ('red', 'red'),
         ('green', 'green'),
+        ('purple', 'purple'),
+        ('orange', 'orange'),
+        ('brown', 'brown'),
+        ('black', 'black'),
+        ('white', 'white'),
+        ('grey', 'grey'),
+        
     )
     MEDIUM_CHOICES = (
-        ('none', 'none'),
+        ('mixed', 'mixed'),
+        ('music', 'music'),
+        ('garment', 'garment'),
+        ('painting', 'painting'),
         ('sculpture', 'sculpture'),
-        ('flat art', 'flat art'),
-        ('audio', 'audio'),
+        ('photo', 'photo'),
+        ('writing', 'writing'),
+        ('drawing', 'drawing'),
+        ('graphic', 'graphic'),
+        ('website', 'website'),
     )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     primary_palette = models.CharField(
-        max_length=6, choices=PALETTE_CHOICES, default='none',)
+        max_length=6, choices=PALETTE_CHOICES, default='mixed',)
     secondary_palette = models.CharField(
-        max_length=6, choices=PALETTE_CHOICES, default='none',)
+        max_length=6, choices=PALETTE_CHOICES, default='mixed',)
     medium = models.CharField(
-        max_length=9, choices=MEDIUM_CHOICES, default='none')
+        max_length=9, choices=MEDIUM_CHOICES, default='mixed')
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
     owner = models.ForeignKey(
@@ -54,7 +65,16 @@ class Artwork(models.Model):
 
 
 class ArtistMedia(models.Model):
+    FILE_CHOICES = (
+        ('unspecified', 'unspecified'),
+        ('image', 'image'),
+        ('audio', 'audio'),
+        ('video', 'video'),
+        ('document', 'document'),
+    )
     name = models.CharField(max_length=100)
+    file_type = models.CharField(
+        max_length=11, choices=FILE_CHOICES, default='unspecified')
     media_url = models.ImageField(upload_to=upload_media)
     owner = models.ForeignKey(
         User, related_name='artistmedias', on_delete=models.CASCADE)
@@ -62,7 +82,16 @@ class ArtistMedia(models.Model):
 
 
 class ArtworkMedia(models.Model):
+    FILE_CHOICES = (
+        ('unspecified', 'unspecified'),
+        ('image', 'image'),
+        ('audio', 'audio'),
+        ('video', 'video'),
+        ('document', 'document'),
+    )
     name = models.CharField(max_length=100)
+    file_type = models.CharField(
+        max_length=11, choices=FILE_CHOICES, default='unspecified')
     media_url = models.ImageField(
         upload_to=upload_media)
     owner = models.ForeignKey(
