@@ -28,7 +28,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True if os.environ['MODE'] == 'dev' else False
 ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
