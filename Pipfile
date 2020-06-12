@@ -18,6 +18,8 @@ pillow = "*"
 djangorestframework-simplejwt = "*"
 django-storages = "*"
 djangorestframework-jwt = "*"
+whitenoise = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.6"

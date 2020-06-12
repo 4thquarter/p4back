@@ -11,6 +11,4 @@ class IsOwner(permissions.BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
         
         # Write permissions are only allowed to the owner of the snippet.
-        return obj.owner == request.user
-
-
+        return obj.id == request.user.id
