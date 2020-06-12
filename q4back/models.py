@@ -53,9 +53,7 @@ class Artwork(models.Model):
         ('flat art', 'flat art'),
         ('audio', 'audio'),
         ('none', 'none'),
-
     )
-
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     primary_palette = models.CharField(
@@ -67,6 +65,6 @@ class Artwork(models.Model):
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name='artwork')
     artwork_media = models.ForeignKey(
-        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media')
+        ArtworkMedia, on_delete=models.CASCADE, related_name='artwork_media', blank=True, null=True)
     owner = models.ForeignKey(
         User, related_name='artworks', on_delete=models.CASCADE)
