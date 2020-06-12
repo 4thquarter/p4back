@@ -38,7 +38,7 @@ class ArtworkList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+permission_classes = [permissions.IsAuthenticatedOrReadOnly ]
 
 class ArtworkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Artwork.objects.all()
