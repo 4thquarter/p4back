@@ -1,6 +1,15 @@
 from django.urls import path
 from . import views
 from rest_framework.routers import DefaultRouter
+from django.contrib.auth import views as auth_views
+from django.contrib import admin
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from django.conf import settings
+from django.conf.urls import include
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('artists/', views.ArtistList.as_view(), name='artist_list'),
