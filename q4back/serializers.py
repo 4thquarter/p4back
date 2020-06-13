@@ -14,19 +14,27 @@ class PreArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = '__all__'
 
-class PreArtworkMediaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ArtworkMedia
-        fields = '__all__'
 
-class PreArtistMediaSerializer(serializers.ModelSerializer):
+class ArtistMediaSerializer(serializers.ModelSerializer):
+    artist_id = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        source='artist'
+    )
+
     class Meta:
         model = ArtistMedia
         fields = '__all__'
 
+
+class ArtworkMediaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArtworkMedia
+        fields = '__all__'
+
 class ArtistSerializer(serializers.ModelSerializer):
     artwork = PreArtworkSerializer(many=True, read_only=True)
-    artist_media = PreArtistMediaSerializer(read_only=True)
+    media = ArtistMediaSerializer(many=True, read_only=True)
     artist_url = serializers.ModelSerializer.serializer_url_field(
         view_name='artist_detail'
     )
@@ -34,34 +42,12 @@ class ArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = '__all__'
 
-
 class ArtworkSerializer(serializers.ModelSerializer):
     artist = PreArtistSerializer(read_only=True)
-    artwork_media = PreArtworkMediaSerializer (read_only=True)
-    artist_id = serializers.PrimaryKeyRelatedField(
-        queryset=Artist.objects.all(),
-        source='artist'
+    media = ArtworkMediaSerializer(many=True, read_only=True)
+    artwork_url = serializers.ModelSerializer.serializer_url_field(
+        view_name='artwork_detail'
     )
     class Meta:
         model = Artwork
-        fields = '__all__'
-
-
-class ArtworkMediaSerializer(serializers.ModelSerializer):
-    artwork_id = serializers.PrimaryKeyRelatedField(
-        read_only=True,
-        source='artwork'
-    )
-    class Meta:
-        model = ArtworkMedia
-        fields = '__all__'
-
-
-class ArtistMediaSerializer(serializers.ModelSerializer):
-    artist_id = serializers.PrimaryKeyRelatedField(
-        read_only=True,
-        source='artist'
-    )
-    class Meta:
-        model = ArtistMedia
         fields = '__all__'

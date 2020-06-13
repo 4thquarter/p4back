@@ -77,7 +77,7 @@ class ArtistMedia(models.Model):
         max_length=11, choices=FILE_CHOICES, default='unspecified')
     media_url = models.ImageField(upload_to=upload_media)
     owner = models.ForeignKey(
-        User, related_name='artistmedias', on_delete=models.CASCADE)
+        User, related_name='media', on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
 
@@ -95,6 +95,6 @@ class ArtworkMedia(models.Model):
     media_url = models.ImageField(
         upload_to=upload_media)
     owner = models.ForeignKey(
-        User, related_name='artworkmedias', on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE)
     artwork = models.ForeignKey(
-        Artwork, related_name='media', on_delete=models.CASCADE)
+        Artwork, related_name= 'media', on_delete=models.CASCADE)
