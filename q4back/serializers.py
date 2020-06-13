@@ -14,13 +14,22 @@ class PreArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = '__all__'
 
+class PreArtworkMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArtworkMedia
+        fields = '__all__'
+
+class PreArtistMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArtistMedia
+        fields = '__all__'
 
 class ArtistSerializer(serializers.ModelSerializer):
     artwork = PreArtworkSerializer(many=True, read_only=True)
+    artist_media = PreArtistMediaSerializer(read_only=True)
     artist_url = serializers.ModelSerializer.serializer_url_field(
         view_name='artist_detail'
     )
-
     class Meta:
         model = Artist
         fields = '__all__'
@@ -28,11 +37,11 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class ArtworkSerializer(serializers.ModelSerializer):
     artist = PreArtistSerializer(read_only=True)
+    artwork_media = PreArtworkMediaSerializer (read_only=True)
     artist_id = serializers.PrimaryKeyRelatedField(
         queryset=Artist.objects.all(),
         source='artist'
     )
-
     class Meta:
         model = Artwork
         fields = '__all__'
@@ -43,7 +52,6 @@ class ArtworkMediaSerializer(serializers.ModelSerializer):
         read_only=True,
         source='artwork'
     )
-
     class Meta:
         model = ArtworkMedia
         fields = '__all__'
@@ -54,7 +62,6 @@ class ArtistMediaSerializer(serializers.ModelSerializer):
         read_only=True,
         source='artist'
     )
-
     class Meta:
         model = ArtistMedia
         fields = '__all__'
