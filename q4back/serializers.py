@@ -34,7 +34,6 @@ class ArtworkMediaSerializer(serializers.ModelSerializer):
 
         
 class ArtworkSerializer(serializers.ModelSerializer):
-    artist = PreArtistSerializer(read_only=True)
     media = ArtworkMediaSerializer(many=True, read_only=True)
     artwork_url = serializers.ModelSerializer.serializer_url_field(
         view_name='artwork_detail'
