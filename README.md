@@ -33,4 +33,4 @@
 
 ### backend
 
-- [Backend](https://github.com/4thquarter/p4back)
+- [frontend](https://github.com/4thquarter/wip-front)
