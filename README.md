@@ -31,6 +31,6 @@
 
 - [Issues](https://github.com/4thquarter/wip-front/issues)
 
-### backend
+### frontend
 
 - [frontend](https://github.com/4thquarter/wip-front)
